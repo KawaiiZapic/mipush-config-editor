@@ -8,4 +8,5 @@ export default defineConfig({
     vue(),
     unocss()
   ],
+  base: ''
 })
