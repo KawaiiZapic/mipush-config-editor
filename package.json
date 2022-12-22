@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@types/node": "16",
+    "escape-string-regexp": "^5.0.0",
     "h3": "^1.0.2",
+    "mdui": "^1.0.2",
     "normalize.css": "^8.0.1",
     "sass": "^1.57.1",
     "unocss": "^0.48.0",

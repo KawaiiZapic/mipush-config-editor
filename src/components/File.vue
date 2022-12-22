@@ -1,9 +1,10 @@
 <template>
-  <button @click="handleOpenFile">打开文件</button>
+  <m-button @click="handleOpenFile" v-ripple v-color >打开文件</m-button>
 </template>
 <script lang="ts" setup>
 import { defineEmits } from 'vue';
 import { Config } from '../Interfaces/RealConfigFile';
+import MButton from './mdui/button.vue';
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: Config): void;
