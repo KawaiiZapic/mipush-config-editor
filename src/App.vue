@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import FileOpen from "./components/File.vue";
-import { ref, computed, watch, reactive } from "vue";
+import { ref, watch, reactive } from "vue";
 import { Config } from "./Interfaces/RealConfigFile";
 import parseConfig from "./Utils/parser";
 import serializeConfig from "./Utils/serializer";
