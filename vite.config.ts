@@ -8,5 +8,14 @@ export default defineConfig({
     vue(),
     unocss()
   ],
-  base: ''
+  base: '',
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3003',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

@@ -1,15 +1,18 @@
 <template>
-  <div class="py-4 flex flex-row items-center"> 
+  <div class="py-4 flex flex-row items-center">
     <file-open v-model="config" />
     <m-button class="ml-2!" v-ripple v-color @click="newFile">新建配置</m-button>
     <m-button class="ml-2!" v-ripple :disabled="!pConfig" v-color @click="saveFile">保存文件</m-button>
-    <div class="ml-2" v-if="config">配置版本: {{ config.version }}</div>
   </div>
   <div class="pb-12" v-if="pConfig">
     <div>
       <m-card class="shadow-none!" v-for="item in pConfig" :key="item.package">
+        <template #avatar>
+          <img v-if="appInfo[item.package]" class="mdui-card-header-avatar" :src="(appInfo[item.package] as any).icon" />
+          <i v-else class="mdui-card-header-avatar mdui-icon material-icons">android</i>
+        </template>
         <template #title>
-          {{ item.name ? item.name : item.package }}
+          {{ appInfo[item.package] ? (appInfo[item.package] as any).name : item.package }}
         </template>
         <template #subtitle>
           {{ item.package }}
@@ -108,7 +111,7 @@
 
 <script setup lang="ts">
 import FileOpen from "./components/File.vue";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, reactive } from "vue";
 import { Config } from "./Interfaces/RealConfigFile";
 import parseConfig from "./Utils/parser";
 import serializeConfig from "./Utils/serializer";
@@ -215,4 +218,26 @@ const saveFile = () => {
 const newFile = () => {
   pConfig.value = {};
 }
+const appInfo = reactive<Record<string, { name: string; icon: string; } | false>>({});
+watch(pConfig, (value) => {
+  if (!value) return;
+  const packages = Object.keys(value);
+  for (const pkg of packages) {
+    if (appInfo[pkg] || appInfo[pkg] === false) continue;
+    fetch(`api/${pkg}`)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.name) {
+          appInfo[pkg] = {
+            name: res.name,
+            icon: "api/icon/" + pkg
+          };
+        } else {
+          appInfo[pkg] = false as any;
+        }
+      });
+  }
+}, {
+  deep: true
+});
 </script>

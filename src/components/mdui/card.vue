@@ -1,6 +1,7 @@
 <template>
     <div class="mdui-card">
         <div class="mdui-card-header" v-if="slots.title || slots.subtitle">
+                <slot name="avatar"/>
             <div class="mdui-card-header-title">
                 <slot name="title"/>
             </div>
