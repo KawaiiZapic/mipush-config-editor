@@ -5,7 +5,7 @@
     <m-button class="ml-2!" v-ripple :disabled="!pConfig" v-color @click="saveFile">保存文件</m-button>
     <div class="ml-2" v-if="config">配置版本: {{ config.version }}</div>
   </div>
-  <div v-if="pConfig">
+  <div class="pb-12" v-if="pConfig">
     <div>
       <m-card class="shadow-none!" v-for="item in pConfig" :key="item.package">
         <template #title>
